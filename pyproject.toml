@@ -1,0 +1,27 @@
+[build-system]
+requires = [
+	"flit_core >=3.2,<4",
+	"python_version >= '3.11'"
+	]
+
+[project]
+name = "scez"
+authors = [{name = "Abe Arab", email = "abea@arcinstitute.org"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+dependencies = [
+	"anndata>=0.7.4",
+	"scanpy",
+	"numpy>=1.17.0",
+	"pandas>=0.21",
+    "adpbulk",
+    "pydeseq2",
+    "blitzgsea",
+	"tqdm",
+	"pytest"
+]
+
+[project.urls]
+Source = "https://github.com/abearab/scez"
