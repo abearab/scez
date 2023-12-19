@@ -1,6 +1,18 @@
 import pandas as pd
 
 
+def rank_genes_to_df(adata, n=50):
+    result = adata.uns['rank_genes_groups']
+
+    groups = result['names'].dtype.names
+
+    df = pd.DataFrame(
+        {group + '_' + key: result[key][group]
+         for group in groups for key in ['names', 'scores']}).head(n)
+
+    return df
+
+
 def add_marker_feature(adata, marker, marker_name, clusters_name, thr = 0, figsize=(10, 4)):
 
     adata.obs[marker_name] = ''
