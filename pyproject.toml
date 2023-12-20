@@ -1,3 +1,10 @@
+[build-system]
+requires = [
+	"flit_core >=3.2,<4",
+	"python_version >= '3.7'"
+	]
+build-backend = "flit_core.buildapi"
+
 [project]
 name = "scez"
 authors = [{name = "Abe Arab", email = "abea@arcinstitute.org"}]
