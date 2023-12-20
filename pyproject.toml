@@ -16,9 +16,9 @@ dependencies = [
 	"scanpy",
 	"numpy>=1.17.0",
 	"pandas>=0.21",
-    "adpbulk",
-    "pydeseq2",
-    "blitzgsea",
+	"adpbulk",
+	"pydeseq2",
+	"blitzgsea",
 	"tqdm",
 	"pytest"
 ]
