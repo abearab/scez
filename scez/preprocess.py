@@ -2,8 +2,9 @@ import scanpy as sc
 
 
 def normalization(adata, lognorm=False):
+    # keep raw counts as a layer
+    adata.layers['raw_counts'] = adata.X.copy()
     sc.pp.normalize_total(adata, target_sum=1e4)
-    sc.pp.log1p(adata)
     sc.pp.highly_variable_genes(adata, min_mean=0.0125, max_mean=3, min_disp=0.5)
     if lognorm:
         sc.pp.log1p(adata)
