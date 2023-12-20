@@ -2,8 +2,8 @@
 
 __version__ = "0.0.1"
 
-import de
-import utils
+from . import de
+from . import utils
 import scanpy as sc
 import matplotlib.pyplot as plt
 

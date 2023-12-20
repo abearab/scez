@@ -15,7 +15,8 @@ dynamic = ["version", "description"]
 dependencies = [
 	"anndata>=0.7.4",
 	"numpy>=1.17.0",
-	"pandas>=0.21",
+	"pandas>=0.21,<2.0",
+	"matplotlib<3.7",
 	"adpbulk",
 	"pydeseq2",
 	"blitzgsea",
