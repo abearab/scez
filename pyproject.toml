@@ -1,9 +1,3 @@
-[build-system]
-requires = [
-	"flit_core >=3.2,<4",
-	"python_version >= '3.11'"
-	]
-
 [project]
 name = "scez"
 authors = [{name = "Abe Arab", email = "abea@arcinstitute.org"}]
