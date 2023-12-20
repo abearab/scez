@@ -3,6 +3,7 @@
 __version__ = "0.0.1"
 
 from . import de
+from . import preprocess as pp
 from . import utils
 import scanpy as sc
 import matplotlib.pyplot as plt
