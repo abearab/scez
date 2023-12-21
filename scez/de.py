@@ -12,9 +12,9 @@ from adpbulk import ADPBulk
 inference = DefaultInference(n_cpus=8)
 
 
-def pseudobulk_by_clusters(adt, condition, cluster_col='leiden'):
+def pseudobulk_by_clusters(adt, condition, cluster_col='leiden', method="mean"):
     # initialize the object
-    adpb = ADPBulk(adt, [cluster_col, condition], method="mean")
+    adpb = ADPBulk(adt, [cluster_col, condition], method=method)
 
     # perform the pseudobulking
     pseudobulk_matrix = adpb.fit_transform()
