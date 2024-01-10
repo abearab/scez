@@ -1,0 +1,24 @@
+name: scez
+channels:
+  - anaconda
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.9
+  - cellxgene
+  - scanpy
+  - python-igraph
+  - leidenalg
+  - pandas<2.0
+  - anndata
+  - numpy
+  - scipy
+  - matplotlib<3.7
+  - seaborn
+  - ipykernel
+  - mscorefonts
+  - pip
+  - pip:
+      - numba
+      - git+https://github.com/ArcInstitute/scez.git
+      - watermark
