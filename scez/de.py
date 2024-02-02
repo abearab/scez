@@ -96,15 +96,21 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
             ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), fontsize=5 * font_scale,
                         ha='right', va='bottom')
 
-    elif n_genes and (side == 'both' or side == 'positive'):
+    elif n_genes and side == 'positive':
         # Highlight top genes
         top_genes = df.query('log2FoldChange > 0').nlargest(n_genes, '-log10(pvalue)')
         for index, row in top_genes.iterrows():
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
                         va='bottom')
-    elif n_genes and (side == 'both' or side == 'negative'):
+    elif n_genes and side == 'negative':
         # Highlight top genes
         top_genes = df.query('log2FoldChange < 0').nlargest(n_genes, '-log10(pvalue)')
+        for index, row in top_genes.iterrows():
+            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
+                        va='bottom')
+    elif n_genes and side == 'both':
+        # Highlight top genes
+        top_genes = df.nlargest(n_genes, '-log10(pvalue)')
         for index, row in top_genes.iterrows():
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
                         va='bottom')
