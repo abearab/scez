@@ -97,13 +97,13 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
     # 2nd, check if n_genes is provided
     elif n_genes and (side == 'both' or side == 'positive'):
         # Highlight top genes
-        top_genes = df.nlargest(4, '-log10(pvalue)')
+        top_genes = df.nlargest(n_genes, '-log10(pvalue)')
         for index, row in top_genes.iterrows():
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
                         va='bottom')
     elif n_genes and (side == 'both' or side == 'negative'):
         # Highlight top genes
-        top_genes = df.nsmallest(4, '-log10(pvalue)')
+        top_genes = df.nsmallest(n_genes, '-log10(pvalue)')
         for index, row in top_genes.iterrows():
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
                         va='bottom')
