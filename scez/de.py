@@ -94,7 +94,6 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
             ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), fontsize=5 * font_scale,
                         ha='right', va='bottom')
 
-    # 2nd, check if n_genes is provided
     elif n_genes and (side == 'both' or side == 'positive'):
         # Highlight top genes
         top_genes = df.nlargest(n_genes, '-log10(pvalue)')
@@ -107,6 +106,9 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
         for index, row in top_genes.iterrows():
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
                         va='bottom')
+    if labels and n_genes:
+        # error message if both labels and n_genes are provided and say one of them is allowed
+        raise ValueError('Provide either labels or n_genes, not both!')
     
 
     plt.tight_layout()
