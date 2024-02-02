@@ -50,7 +50,7 @@ def run_deseq(adata, design):
     return df
 
 
-def plot_volcano(df, title=None, font_scale=1):
+def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_scale=1, **kwargs):
     df['name'] = df.index.to_list()
 
     df['-log10(pvalue)'] = - np.log10(df.pvalue)
@@ -61,7 +61,8 @@ def plot_volcano(df, title=None, font_scale=1):
     ax.scatter(
         df['log2FoldChange'],
         df['-log10(pvalue)'],
-        alpha=0.9, s=5, c='#fcae91'
+        alpha=0.9, s=5, c='#fcae91',
+        **kwargs
     )
 
     # Set background color to transparent
@@ -82,10 +83,31 @@ def plot_volcano(df, title=None, font_scale=1):
 
     ax.grid(False)
 
-    top_genes = df.nlargest(4, '-log10(pvalue)')  # Adjust the number as needed
-    for index, row in top_genes.iterrows():
-        ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
-                    va='bottom')
+    if labels:
+        # Highlight the points from given list
+        for label in labels:
+            ax.scatter(
+                df.loc[label, 'log2FoldChange'],
+                df.loc[label, '-log10(pvalue)'],
+                s=20, c='red'
+            )
+            ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), fontsize=5 * font_scale,
+                        ha='right', va='bottom')
+
+    # 2nd, check if n_genes is provided
+    elif n_genes and (side == 'both' or side == 'positive'):
+        # Highlight top genes
+        top_genes = df.nlargest(4, '-log10(pvalue)')
+        for index, row in top_genes.iterrows():
+            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
+                        va='bottom')
+    elif n_genes and (side == 'both' or side == 'negative'):
+        # Highlight top genes
+        top_genes = df.nsmallest(4, '-log10(pvalue)')
+        for index, row in top_genes.iterrows():
+            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
+                        va='bottom')
+    
 
     plt.tight_layout()
     plt.show()
