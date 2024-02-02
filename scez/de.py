@@ -9,7 +9,6 @@ from pydeseq2.default_inference import DefaultInference
 from pydeseq2.ds import DeseqStats
 from adpbulk import ADPBulk
 
-inference = DefaultInference(n_cpus=8)
 
 
 def pseudobulk_by_clusters(adt, condition, cluster_col='leiden', method="mean"):
@@ -30,7 +29,10 @@ def pseudobulk_by_clusters(adt, condition, cluster_col='leiden', method="mean"):
     return out
 
 
-def run_deseq(adata, design):
+def run_deseq(adata, design, n_cpus=8):
+
+    inference = DefaultInference(n_cpus=n_cpus)
+    
     dds = DeseqDataSet(
         counts=adata.to_df().astype(int),
         metadata=adata.obs,
