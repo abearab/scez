@@ -20,5 +20,4 @@ dependencies:
   - pip
   - pip:
       - numba
-      - git+https://github.com/ArcInstitute/scez.git
       - watermark
