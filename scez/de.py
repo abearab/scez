@@ -10,7 +10,6 @@ from pydeseq2.ds import DeseqStats
 from adpbulk import ADPBulk
 
 
-
 def pseudobulk_by_clusters(adt, condition, cluster_col='leiden', method="mean"):
     # initialize the object
     adpb = ADPBulk(adt, [cluster_col, condition], method=method)
@@ -52,52 +51,115 @@ def run_deseq(adata, design, n_cpus=8):
     return df
 
 
-def plot_volcano(df, title=None, font_scale=1):
-    df['name'] = df.index.to_list()
+def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_scale=1, dot_size = 5, ax = None, **kwargs):
+    dot_size_highlight = dot_size * 1.1
+    annotate_font_size = 5 * font_scale
+    scatter_font_size = 8 * font_scale
+    label_font_size = 9 * font_scale
+    title_font_size = 10 * font_scale
 
+    if 'name' not in df.columns: df['name'] = df.index.to_list()
     df['-log10(pvalue)'] = - np.log10(df.pvalue)
 
-    fig, ax = plt.subplots(figsize=(3, 3))
+    if not ax: fig, ax = plt.subplots(figsize=(3, 3))
 
     # Scatter plot
     ax.scatter(
         df['log2FoldChange'],
         df['-log10(pvalue)'],
-        alpha=0.9, s=5, c='#fcae91'
+        alpha=0.9, s=dot_size, c='#1f77b4',  # Changed color to a more subtle blue
+        **kwargs
     )
 
     # Set background color to transparent
     ax.set_facecolor('none')
 
     # Set smaller font size
-    ax.tick_params(axis='both', which='both', labelsize=8 * font_scale)
+    ax.tick_params(axis='both', which='both', labelsize=scatter_font_size)
 
     # Set labels
-    ax.set_xlabel('log2FoldChange', fontsize=9 * font_scale)
-    ax.set_ylabel('-log10(pvalue)', fontsize=9 * font_scale)
+    ax.set_xlabel('log2FoldChange', fontsize=label_font_size)
+    ax.set_ylabel('-log10(pvalue)', fontsize=label_font_size)
 
     # Set plot title
     if not title:
-        ax.set_title('Volcano Plot', fontsize=10 * font_scale)
+        ax.set_title('Volcano Plot', fontsize=title_font_size)
     else:
-        ax.set_title(title, fontsize=10 * font_scale)
+        ax.set_title(title, fontsize=title_font_size)
 
     ax.grid(False)
 
-    top_genes = df.nlargest(4, '-log10(pvalue)')  # Adjust the number as needed
-    for index, row in top_genes.iterrows():
-        ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
-                    va='bottom')
+    if labels and n_genes:
+        # error message if both labels and n_genes are provided and say one of them is allowed
+        raise ValueError('Provide either labels or n_genes, not both!')
 
-    plt.tight_layout()
-    plt.show()
+    if labels:
+        # Highlight the points from given list
+        for label in labels:
+            ax.scatter(
+                df.loc[label, 'log2FoldChange'],
+                df.loc[label, '-log10(pvalue)'],
+                s=dot_size_highlight, c='#ff7f0e'  # Changed highlight color to a contrasting orange
+            )
+            ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), 
+                        fontsize=annotate_font_size * font_scale,
+                        ha='right', va='bottom')
+    elif n_genes and side == 'positive':
+        # Highlight top genes
+        top_genes = df.query('log2FoldChange > 0').nlargest(n_genes, '-log10(pvalue)')
+        for _, row in top_genes.iterrows():  # Replaced "index" with "_"
+            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
+                        fontsize=annotate_font_size, ha='right', va='bottom')
+    elif n_genes and side == 'negative':
+        # Highlight top genes
+        top_genes = df.query('log2FoldChange < 0').nlargest(n_genes, '-log10(pvalue)')
+        for _, row in top_genes.iterrows():  # Replaced "index" with "_"
+            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
+                        fontsize=annotate_font_size, ha='right', va='bottom')
+    elif n_genes and side == 'both':
+        # Highlight top genes
+        top_genes = df.nlargest(n_genes, '-log10(pvalue)')
+        for _, row in top_genes.iterrows():  # Replaced "index" with "_"
+            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
+                        fontsize=annotate_font_size, ha='right', va='bottom')
+
+    if not ax: 
+        plt.tight_layout()
+        plt.show()
 
 
-def plot_top_DEG_violinplot(adata, df):
-    top_genes = df.nlargest(20, '-log10(pvalue)')  # Adjust the number as needed
+def plot_top_DEG_violinplot(adata, df, title=None, labels=None, n_genes=False, side='both', font_scale=1, figsize=(10, 4), **kwargs):
+    label_font_size = 9 * font_scale
+    title_font_size = 10 * font_scale
 
-    # Filter the single-cell dataset for the top genes
-    subset_adata = adata[:, top_genes.index]
+    if 'name' not in df.columns: df['name'] = df.index.to_list()
+
+    if labels and n_genes:
+        # error message if both labels and n_genes are provided and say one of them is allowed
+        raise ValueError('Provide either labels or n_genes, not both!')
+
+    if not labels and not n_genes:
+        # error message if neither labels nor n_genes are provided
+        raise ValueError('Provide either labels or n_genes!')
+
+    if labels:
+        # Highlight the points from given list
+        selected_genes = df.loc[labels]
+
+    elif n_genes and side == 'positive':
+        # Highlight top genes
+        selected_genes = df.query('log2FoldChange > 0').nlargest(n_genes, '-log10(pvalue)')
+
+    elif n_genes and side == 'negative':
+        # Highlight top genes
+        selected_genes = df.query('log2FoldChange < 0').nlargest(n_genes, '-log10(pvalue)')
+
+    elif n_genes and side == 'both':
+        # Highlight top genes
+        selected_genes = df.nlargest(n_genes, '-log10(pvalue)')
+
+    # Filter the single-cell dataset for the selected genes
+    subset_adata = adata[:, selected_genes.index]
     subset_adata.var.index = subset_adata.var.index.str.split('_').str[0]
 
     # Convert the subset of adata to a DataFrame
@@ -110,15 +172,17 @@ def plot_top_DEG_violinplot(adata, df):
     melted_df = pd.melt(merged_df, id_vars='sample', var_name='Gene', value_name='Counts')
 
     # Create a violin plot
-    plt.figure(figsize=(10, 4))
-    sns.violinplot(x='Gene', y='Counts', hue='sample', data=melted_df, split=True, inner='quartile', palette='Set2')
-    sns.stripplot(x='Gene', y='Counts', hue='sample', data=melted_df, dodge=True, jitter=True, color='black', size=1,
-                  alpha=0.3)
+    plt.figure(figsize=figsize)
+    sns.violinplot(x='Gene', y='Counts', hue='sample', data=melted_df, split=True, inner='quartile', palette='Set2', **kwargs)
+    sns.stripplot(x='Gene', y='Counts', hue='sample', data=melted_df, dodge=True, jitter=True, color='black', size=1, alpha=0.3, **kwargs)
 
-    plt.xticks(rotation=45, ha='right', fontsize=8)
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.xticks(rotation=45, ha='right', fontsize=label_font_size)
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=label_font_size)
 
-    plt.title('Top Differentially Expressed Genes')
+    if not title:
+        plt.title('Top Differentially Expressed Genes', fontsize=title_font_size)
+    else:
+        plt.title(title, fontsize=title_font_size)
     plt.show()
 
 
