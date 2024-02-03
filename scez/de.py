@@ -52,8 +52,9 @@ def run_deseq(adata, design, n_cpus=8):
     return df
 
 
-def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_scale=1, **kwargs):
-    annotate_font_size = 3 * font_scale
+def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_scale=1, dot_size = 5, **kwargs):
+    dot_size_highlight = dot_size * 1.1
+    annotate_font_size = 5 * font_scale
     scatter_font_size = 8 * font_scale
     label_font_size = 9 * font_scale
     title_font_size = 10 * font_scale
@@ -67,7 +68,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
     ax.scatter(
         df['log2FoldChange'],
         df['-log10(pvalue)'],
-        alpha=0.9, s=5, c='#fcae91',
+        alpha=0.9, s=dot_size, c='#fcae91',
         **kwargs
     )
 
@@ -95,7 +96,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
             ax.scatter(
                 df.loc[label, 'log2FoldChange'],
                 df.loc[label, '-log10(pvalue)'],
-                s=20, c='red'
+                s=dot_size_highlight, c='red'
             )
             ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), 
                         fontsize=annotate_font_size * font_scale,
