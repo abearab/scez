@@ -53,8 +53,12 @@ def run_deseq(adata, design, n_cpus=8):
 
 
 def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_scale=1, **kwargs):
-    df['name'] = df.index.to_list()
+    annotate_font_size = 3 * font_scale
+    scatter_font_size = 8 * font_scale
+    label_font_size = 9 * font_scale
+    title_font_size = 10 * font_scale
 
+    df['name'] = df.index.to_list()
     df['-log10(pvalue)'] = - np.log10(df.pvalue)
 
     fig, ax = plt.subplots(figsize=(3, 3))
@@ -71,17 +75,17 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
     ax.set_facecolor('none')
 
     # Set smaller font size
-    ax.tick_params(axis='both', which='both', labelsize=8 * font_scale)
+    ax.tick_params(axis='both', which='both', labelsize=scatter_font_size)
 
     # Set labels
-    ax.set_xlabel('log2FoldChange', fontsize=9 * font_scale)
-    ax.set_ylabel('-log10(pvalue)', fontsize=9 * font_scale)
+    ax.set_xlabel('log2FoldChange', fontsize=label_font_size)
+    ax.set_ylabel('-log10(pvalue)', fontsize=label_font_size)
 
     # Set plot title
     if not title:
-        ax.set_title('Volcano Plot', fontsize=10 * font_scale)
+        ax.set_title('Volcano Plot', fontsize=title_font_size)
     else:
-        ax.set_title(title, fontsize=10 * font_scale)
+        ax.set_title(title, fontsize=title_font_size)
 
     ax.grid(False)
 
@@ -93,27 +97,28 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
                 df.loc[label, '-log10(pvalue)'],
                 s=20, c='red'
             )
-            ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), fontsize=5 * font_scale,
+            ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), 
+                        fontsize=annotate_font_size * font_scale,
                         ha='right', va='bottom')
 
     elif n_genes and side == 'positive':
         # Highlight top genes
         top_genes = df.query('log2FoldChange > 0').nlargest(n_genes, '-log10(pvalue)')
         for index, row in top_genes.iterrows():
-            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
-                        va='bottom')
+            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
+                        fontsize=annotate_font_size, ha='right', va='bottom')
     elif n_genes and side == 'negative':
         # Highlight top genes
         top_genes = df.query('log2FoldChange < 0').nlargest(n_genes, '-log10(pvalue)')
         for index, row in top_genes.iterrows():
-            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
-                        va='bottom')
+            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
+                        fontsize=annotate_font_size, ha='right', va='bottom')
     elif n_genes and side == 'both':
         # Highlight top genes
         top_genes = df.nlargest(n_genes, '-log10(pvalue)')
         for index, row in top_genes.iterrows():
-            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), fontsize=5 * font_scale, ha='right',
-                        va='bottom')
+            ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
+                        fontsize=annotate_font_size, ha='right', va='bottom')
     if labels and n_genes:
         # error message if both labels and n_genes are provided and say one of them is allowed
         raise ValueError('Provide either labels or n_genes, not both!')
