@@ -128,7 +128,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
         plt.show()
 
 
-def plot_top_DEG_violinplot(adata, df, labels=None, n_genes=False, side='both', font_scale=1, figsize=(10, 4), **kwargs):
+def plot_top_DEG_violinplot(adata, df, title=None, labels=None, n_genes=False, side='both', font_scale=1, figsize=(10, 4), **kwargs):
     label_font_size = 9 * font_scale
     title_font_size = 10 * font_scale
 
@@ -179,7 +179,10 @@ def plot_top_DEG_violinplot(adata, df, labels=None, n_genes=False, side='both', 
     plt.xticks(rotation=45, ha='right', fontsize=label_font_size)
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=label_font_size)
 
-    plt.title('Top Differentially Expressed Genes', fontsize=title_font_size)
+    if not title:
+        plt.title('Top Differentially Expressed Genes', fontsize=title_font_size)
+    else:
+        plt.title(title, fontsize=title_font_size)
     plt.show()
 
 
