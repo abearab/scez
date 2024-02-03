@@ -138,6 +138,10 @@ def plot_top_DEG_violinplot(adata, df, labels=None, n_genes=False, side='both', 
         # error message if both labels and n_genes are provided and say one of them is allowed
         raise ValueError('Provide either labels or n_genes, not both!')
 
+    if not labels and not n_genes:
+        # error message if neither labels nor n_genes are provided
+        raise ValueError('Provide either labels or n_genes!')
+
     if labels:
         # Highlight the points from given list
         selected_genes = df.loc[labels]
