@@ -68,7 +68,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
     ax.scatter(
         df['log2FoldChange'],
         df['-log10(pvalue)'],
-        alpha=0.9, s=dot_size, c='#fcae91',
+        alpha=0.9, s=dot_size, c='#1f77b4',  # Changed color to a more subtle blue
         **kwargs
     )
 
@@ -96,7 +96,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
             ax.scatter(
                 df.loc[label, 'log2FoldChange'],
                 df.loc[label, '-log10(pvalue)'],
-                s=dot_size_highlight, c='red'
+                s=dot_size_highlight, c='#ff7f0e'  # Changed highlight color to a contrasting orange
             )
             ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), 
                         fontsize=annotate_font_size * font_scale,
@@ -105,25 +105,24 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
     elif n_genes and side == 'positive':
         # Highlight top genes
         top_genes = df.query('log2FoldChange > 0').nlargest(n_genes, '-log10(pvalue)')
-        for index, row in top_genes.iterrows():
+        for _, row in top_genes.iterrows():  # Replaced "index" with "_"
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
                         fontsize=annotate_font_size, ha='right', va='bottom')
     elif n_genes and side == 'negative':
         # Highlight top genes
         top_genes = df.query('log2FoldChange < 0').nlargest(n_genes, '-log10(pvalue)')
-        for index, row in top_genes.iterrows():
+        for _, row in top_genes.iterrows():  # Replaced "index" with "_"
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
                         fontsize=annotate_font_size, ha='right', va='bottom')
     elif n_genes and side == 'both':
         # Highlight top genes
         top_genes = df.nlargest(n_genes, '-log10(pvalue)')
-        for index, row in top_genes.iterrows():
+        for _, row in top_genes.iterrows():  # Replaced "index" with "_"
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
                         fontsize=annotate_font_size, ha='right', va='bottom')
     if labels and n_genes:
         # error message if both labels and n_genes are provided and say one of them is allowed
         raise ValueError('Provide either labels or n_genes, not both!')
-    
 
     plt.tight_layout()
     plt.show()
