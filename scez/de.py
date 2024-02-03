@@ -10,7 +10,6 @@ from pydeseq2.ds import DeseqStats
 from adpbulk import ADPBulk
 
 
-
 def pseudobulk_by_clusters(adt, condition, cluster_col='leiden', method="mean"):
     # initialize the object
     adpb = ADPBulk(adt, [cluster_col, condition], method=method)
@@ -90,6 +89,10 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
 
     ax.grid(False)
 
+    if labels and n_genes:
+        # error message if both labels and n_genes are provided and say one of them is allowed
+        raise ValueError('Provide either labels or n_genes, not both!')
+
     if labels:
         # Highlight the points from given list
         for label in labels:
@@ -101,7 +104,6 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
             ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), 
                         fontsize=annotate_font_size * font_scale,
                         ha='right', va='bottom')
-
     elif n_genes and side == 'positive':
         # Highlight top genes
         top_genes = df.query('log2FoldChange > 0').nlargest(n_genes, '-log10(pvalue)')
@@ -120,9 +122,6 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
         for _, row in top_genes.iterrows():  # Replaced "index" with "_"
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
                         fontsize=annotate_font_size, ha='right', va='bottom')
-    if labels and n_genes:
-        # error message if both labels and n_genes are provided and say one of them is allowed
-        raise ValueError('Provide either labels or n_genes, not both!')
 
     plt.tight_layout()
     plt.show()
