@@ -9,13 +9,15 @@ def normalization(adata,lognorm=True):
         sc.pp.log1p(adata)
 
 
-def clustering(adata, rep=None, n_neighbor=30,n_comps=50,res=None, use_highly_variable=True):
+def clustering(
+        adata, n_comps=50, n_neighbor=30, use_highly_variable=True,
+        use_rep=None, resolution=None
+        ):
     if use_highly_variable:
         sc.pp.highly_variable_genes(adata, min_mean=0.0125, max_mean=3, min_disp=0.5)
         sc.pp.pca(adata, n_comps=n_comps, use_highly_variable=True)
     else:
         sc.pp.pca(adata, n_comps=n_comps)
-    sc.pp.neighbors(adata, use_rep=rep, n_neighbors=n_neighbor)
-    # why can't we just work with the default neighbors?
+    sc.pp.neighbors(adata, use_rep=use_rep, n_neighbors=n_neighbor)
     sc.tl.umap(adata)
-    sc.tl.leiden(adata, resolution=res)
+    sc.tl.leiden(adata, resolution=resolution)
