@@ -1,9 +1,10 @@
 """scez – Single Cell Analysis, Easy Mode!"""
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
-from . import de
+from . import diffexp as de
 from . import preprocess as pp
+from . import visualization as viz
 from . import utils
 import scanpy as sc
 import matplotlib.pyplot as plt
