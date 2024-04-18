@@ -18,8 +18,7 @@ def clustering(
         ):
     if use_highly_variable:
         sc.pp.highly_variable_genes(adata, min_mean=0.0125, max_mean=3, min_disp=0.5)
-        sc.tl.pca(adata, svd_solver='arpack', use_highly_variable=True)
-        # sc.pp.pca(adata, n_comps=n_pcs, use_highly_variable=True)
+        sc.pp.pca(adata, n_comps=n_pcs, use_highly_variable=True)
     else:
         sc.pp.pca(adata, n_comps=n_pcs)
     sc.pp.neighbors(adata, use_rep=use_rep, n_neighbors=n_neighbors)#, n_pcs=n_pcs)
