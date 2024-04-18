@@ -4,7 +4,7 @@ import scanpy as sc
 def normalization(adata,lognorm=True,final_layer='log1p_norm'):
     # keep raw counts as a layer
     adata.layers['raw_counts'] = adata.X.copy()
-    scales_counts = sc.pp.normalize_total(adata, target_sum=None, inplace=False)
+    scales_counts = sc.pp.normalize_total(adata, target_sum=1e4, inplace=False)
     if lognorm:
         # log1p transform
         adata.layers["log1p_norm"] = sc.pp.log1p(scales_counts["X"], copy=True)
