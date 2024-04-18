@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import scanpy as sc
 
 
-def optimising_umap_layout(adata):
+def optimising_umap_layout(adata, cluster_key='louvain'):
     # https://scanpy-tutorials.readthedocs.io/en/latest/plotting/advanced.html
     # Copy adata not to modify UMAP in the original adata object
     adata_temp = adata.copy()
@@ -23,7 +23,7 @@ def optimising_umap_layout(adata):
         # Create plot, placing it in grid
         sc.pl.umap(
             adata_temp,
-            color=["louvain"],
+            color=[cluster_key],
             title=param_str,
             s=40,
             ax=ax,
