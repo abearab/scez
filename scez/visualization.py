@@ -3,18 +3,17 @@ import matplotlib.pyplot as plt
 import scanpy as sc
 
 
-def optimising_umap_layout(adata, cluster_key='leiden'):
+def optimising_umap_layout(adata, cluster_key='leiden',MIN_DISTS = [0.1, 1, 2], SPREADS = [0.5, 1, 5]):
     # https://scanpy-tutorials.readthedocs.io/en/latest/plotting/advanced.html
     # Copy adata not to modify UMAP in the original adata object
     adata_temp = adata.copy()
-    # Loop through different umap parameters, recomputting and replotting UMAP for each of them
-    MIN_DISTS = [0.1, 1, 2]
-    SPREADS = [0.5, 1, 5]
+    
     # Create grid of plots, with a little extra room for the legends
     fig, axes = plt.subplots(
         len(MIN_DISTS), len(SPREADS), figsize=(len(SPREADS) * 3 + 2, len(MIN_DISTS) * 3)
     )
 
+    # Loop through different umap parameters, recomputting and replotting UMAP for each of them
     for (i, min_dist), (j, spread) in product(enumerate(MIN_DISTS), enumerate(SPREADS)):
         ax = axes[i][j]
         param_str = " ".join(["min_dist =", str(min_dist), "and spread =", str(spread)])
