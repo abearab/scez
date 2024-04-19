@@ -4,7 +4,7 @@ __version__ = "0.0.4"
 
 from . import diffexp as de
 from . import preprocess as pp
-from . import visualization as viz
+from . import representation as rp
 from . import utils
 import scanpy as sc
 import matplotlib.pyplot as plt
