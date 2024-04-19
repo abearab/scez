@@ -7,7 +7,7 @@ import anndata as ad
 from pydeseq2.dds import DeseqDataSet
 from pydeseq2.default_inference import DefaultInference
 from pydeseq2.ds import DeseqStats
-from adpbulk import ADPBulk
+from .utils import run_adjust_text
 
 
 def pseudobulk_by_clusters(adt, condition, cluster_col='leiden', method="mean"):
@@ -93,7 +93,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
         # error message if both labels and n_genes are provided and say one of them is allowed
         raise ValueError('Provide either labels or n_genes, not both!')
 
-    if labels:
+    elif labels:
         # Highlight the points from given list
         for label in labels:
             ax.scatter(
@@ -104,6 +104,8 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
             ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), 
                         fontsize=annotate_font_size * font_scale,
                         ha='right', va='bottom')
+            run_adjust_text(df['log2FoldChange'], df['-log10(pvalue'], use_arrow=False)
+
     elif n_genes and side == 'positive':
         # Highlight top genes
         top_genes = df.query('log2FoldChange > 0').nlargest(n_genes, '-log10(pvalue)')

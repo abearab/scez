@@ -1,4 +1,6 @@
 import pandas as pd
+from matplotlib import pyplot as plt
+from adjustText import adjust_text
 
 
 def rank_genes_to_df(adata, n=50):
@@ -44,3 +46,17 @@ def add_marker_feature(adata, marker, marker_name, clusters_name, thr = 0, figsi
     ax.set_yscale('log')
     ax.set_ylabel('# of cells')
     return ax
+
+
+def run_adjust_text(x, y, use_arrow=True):
+    texts = [
+        plt.text(
+            x[i], y[i], 
+            'Text%s' %i, ha='center', va='center'
+        ) for i in range(len(x))
+    ]
+    
+    if use_arrow:
+        adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red'))
+    else:
+        adjust_text(texts)

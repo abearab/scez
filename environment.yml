@@ -21,4 +21,5 @@ dependencies:
   - pip:
       - numba
       - tiledbsoma
+      - adjustText
       - watermark
