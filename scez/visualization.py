@@ -1,6 +1,7 @@
 from itertools import product
 import matplotlib.pyplot as plt
 import scanpy as sc
+import numpy as np
 
 
 def optimising_umap_layout(adata, cluster_key='leiden',MIN_DISTS = [0.1, 1, 2], SPREADS = [0.5, 1, 5]):
@@ -32,3 +33,12 @@ def optimising_umap_layout(adata, cluster_key='leiden',MIN_DISTS = [0.1, 1, 2], 
     plt.show()
     plt.close()
     del adata_temp
+
+
+def random_ordering(adata):
+    # Randomly order cells by making a random index and subsetting AnnData based on it
+    # Set a random seed to ensure that the cell ordering will be reproducible
+    np.random.seed(0)
+    random_indices = np.random.permutation(list(range(adata.shape[0])))
+
+    return random_indices
