@@ -8,6 +8,7 @@ from pydeseq2.dds import DeseqDataSet
 from pydeseq2.default_inference import DefaultInference
 from pydeseq2.ds import DeseqStats
 from .utils import run_adjust_text
+from adpbulk import ADPBulk
 
 
 def pseudobulk_by_clusters(adt, condition, cluster_col='leiden', method="mean"):
