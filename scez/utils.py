@@ -48,7 +48,7 @@ def add_marker_feature(adata, marker, marker_name, clusters_name, thr = 0, figsi
     return ax
 
 
-def run_adjust_text(x, y, use_arrow=True):
+def run_adjust_text(x, y, ax=None, use_arrow=True):
     texts = [
         plt.text(
             x[i], y[i], 
@@ -57,6 +57,6 @@ def run_adjust_text(x, y, use_arrow=True):
     ]
     
     if use_arrow:
-        adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red'))
+        adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red'), ax = ax)
     else:
-        adjust_text(texts)
+        adjust_text(texts, ax = ax)

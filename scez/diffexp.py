@@ -105,7 +105,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
             ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), 
                         fontsize=annotate_font_size * font_scale,
                         ha='right', va='bottom')
-            run_adjust_text(df['log2FoldChange'], df['-log10(pvalue'], use_arrow=False)
+        run_adjust_text(df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)'], ax=ax, use_arrow=False)
 
     elif n_genes and side == 'positive':
         # Highlight top genes
@@ -113,18 +113,23 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
         for _, row in top_genes.iterrows():  # Replaced "index" with "_"
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
                         fontsize=annotate_font_size, ha='right', va='bottom')
+        run_adjust_text(top_genes['log2FoldChange'], top_genes['-log10(pvalue)'], ax=ax, use_arrow=False)
+
     elif n_genes and side == 'negative':
         # Highlight top genes
         top_genes = df.query('log2FoldChange < 0').nlargest(n_genes, '-log10(pvalue)')
         for _, row in top_genes.iterrows():  # Replaced "index" with "_"
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
                         fontsize=annotate_font_size, ha='right', va='bottom')
+        run_adjust_text(top_genes['log2FoldChange'], top_genes['-log10(pvalue)'], ax=ax, use_arrow=False)
+
     elif n_genes and side == 'both':
         # Highlight top genes
         top_genes = df.nlargest(n_genes, '-log10(pvalue)')
         for _, row in top_genes.iterrows():  # Replaced "index" with "_"
             ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
                         fontsize=annotate_font_size, ha='right', va='bottom')
+        run_adjust_text(top_genes['log2FoldChange'], top_genes['-log10(pvalue)'], ax=ax, use_arrow=False)
 
     if not ax: 
         plt.tight_layout()
@@ -189,6 +194,6 @@ def plot_top_DEG_violinplot(adata, df, title=None, labels=None, n_genes=False, s
     plt.show()
 
 
-def write_top_DEGs(df, sample_id, n_hits=200):
+def write_top_DEGs(df, sample_id, result_dir='.', n_hits=200):
     df['-log10(pvalue)'] = - np.log10(df.pvalue)
-    df.nlargest(n_hits, '-log10(pvalue)').to_csv(f'{sample_id}_top_{n_hits}.csv')  # Adjust the number as needed
+    df.nlargest(n_hits, '-log10(pvalue)').to_csv(f'{result_dir}/{sample_id}_top_{n_hits}.csv')  # Adjust the number as needed
