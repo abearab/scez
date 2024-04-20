@@ -17,6 +17,7 @@ dependencies = [
 	"numpy>=1.17.0",
 	"pandas>=0.21,<2.0",
 	"matplotlib<3.7",
+ 	"seaborn=0.12.2",
 	"adpbulk",
 	"pydeseq2",
 	"blitzgsea",
