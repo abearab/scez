@@ -90,49 +90,40 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
 
     ax.grid(False)
 
+    # check if `labels` is provided or set that based on `n_genes` and `side`
     if labels and n_genes:
         # error message if both labels and n_genes are provided and say one of them is allowed
         raise ValueError('Provide either labels or n_genes, not both!')
 
-    elif labels:
-        # Highlight the points from given list
+    elif n_genes and side == 'positive':
+        # Highlight top genes
+        top_genes = df.query('log2FoldChange > 0').nlargest(n_genes, '-log10(pvalue)')
+        labels = [row['name'] for _, row in top_genes.iterrows()]
+
+    elif n_genes and side == 'negative':
+        # Highlight top genes
+        top_genes = df.query('log2FoldChange < 0').nlargest(n_genes, '-log10(pvalue)')
+        labels = [row['name'] for _, row in top_genes.iterrows()]
+
+    elif n_genes and side == 'both':
+        # Highlight top genes
+        top_genes = df.nlargest(n_genes, '-log10(pvalue)')
+        labels = [row['name'] for _, row in top_genes.iterrows()]
+
+    # Highlight the points from given labels
+    if labels:
         for label in labels:
             ax.scatter(
                 df.loc[label, 'log2FoldChange'],
                 df.loc[label, '-log10(pvalue)'],
                 s=dot_size_highlight, c='#ff7f0e'  # Changed highlight color to a contrasting orange
             )
-            # ax.annotate(label, (df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)']), 
-            #             fontsize=annotate_font_size * font_scale,
-            #             ha='right', va='bottom')
-        run_adjust_text(df.loc[label, 'log2FoldChange'], df.loc[label, '-log10(pvalue)'], labels, ax=ax, use_arrow=False)
-
-    elif n_genes and side == 'positive':
-        # Highlight top genes
-        top_genes = df.query('log2FoldChange > 0').nlargest(n_genes, '-log10(pvalue)')
-        # for _, row in top_genes.iterrows():  # Replaced "index" with "_"
-        #     ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
-        #                 fontsize=annotate_font_size, ha='right', va='bottom')
-        labels = [row['name'] for _, row in top_genes.iterrows()]
-        run_adjust_text(top_genes['log2FoldChange'], top_genes['-log10(pvalue)'], labels=labels, ax=ax, use_arrow=False)
-
-    elif n_genes and side == 'negative':
-        # Highlight top genes
-        top_genes = df.query('log2FoldChange < 0').nlargest(n_genes, '-log10(pvalue)')
-        # for _, row in top_genes.iterrows():  # Replaced "index" with "_"
-        #     ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
-        #                 fontsize=annotate_font_size, ha='right', va='bottom')
-        labels = [row['name'] for _, row in top_genes.iterrows()]
-        run_adjust_text(top_genes['log2FoldChange'], top_genes['-log10(pvalue)'], labels=labels, ax=ax, use_arrow=False)
-
-    elif n_genes and side == 'both':
-        # Highlight top genes
-        top_genes = df.nlargest(n_genes, '-log10(pvalue)')
-        # for _, row in top_genes.iterrows():  # Replaced "index" with "_"
-        #     ax.annotate(row['name'], (row['log2FoldChange'], row['-log10(pvalue)']), 
-        #                 fontsize=annotate_font_size, ha='right', va='bottom')
-        labels = [row['name'] for _, row in top_genes.iterrows()]
-        run_adjust_text(top_genes['log2FoldChange'], top_genes['-log10(pvalue)'], labels=labels, ax=ax, use_arrow=False)
+        run_adjust_text(
+            df.loc[labels, 'log2FoldChange'], 
+            df.loc[labels, '-log10(pvalue)'], 
+            labels, 
+            font_size=annotate_font_size, ax=ax, use_arrow=False
+        )
 
     if not ax: 
         plt.tight_layout()
