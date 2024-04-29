@@ -1,3 +1,5 @@
+[![Python package](https://github.com/abearab/scez/actions/workflows/main.yml/badge.svg)](https://github.com/abearab/scez/actions/workflows/main.yml)
+
 ## scez – single cell, easy mode
 
 ### Installation
@@ -5,12 +7,10 @@ Make sure you have mamba installed in your base environment. If not, install it 
 ```bash
 conda install mamba -n base -c conda-forge
 ```
-Then, create a new environment named scez with:
+Then, create a new conda environment with the provided `environment.yml` file and activate it. This will install all necessary dependencies for scez.
 ```bash
-mamba create -n scez -c conda-forge scvi-tools scanpy python-igraph leidenalg matplotlib=3.6
-```
-Activate the scez environment:
-```bash
+conda env create -f environment.yml
+
 conda activate scez
 ```
 Finally, install scez with:
