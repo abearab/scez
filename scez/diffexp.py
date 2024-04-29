@@ -116,7 +116,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
             ax.scatter(
                 df.loc[label, 'log2FoldChange'],
                 df.loc[label, '-log10(pvalue)'],
-                s=dot_size_highlight, c='#ff7f0e'  # Changed highlight color to a contrasting orange
+                s=dot_size_highlight, c='#FFA500'
             )
         run_adjust_text(
             df.loc[labels, 'log2FoldChange'], 
