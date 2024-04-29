@@ -48,11 +48,11 @@ def add_marker_feature(adata, marker, marker_name, clusters_name, thr = 0, figsi
     return ax
 
 
-def run_adjust_text(x, y, ax=None, use_arrow=True):
+def run_adjust_text(x, y, labels, ax=None, use_arrow=True):
     texts = [
         plt.text(
             x[i], y[i], 
-            'Text%s' %i, ha='center', va='center'
+            labels[i], ha='center', va='center'
         ) for i in range(len(x))
     ]
     
