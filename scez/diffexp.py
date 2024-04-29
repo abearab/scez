@@ -52,7 +52,10 @@ def run_deseq(adata, design, n_cpus=8):
     return df
 
 
-def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_scale=1, dot_size = 5, ax = None, **kwargs):
+def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', 
+                 font_scale=1, dot_size = 5,
+                 color = '#1f77b4', color_highlight = '#FFA500',
+                 ax = None, **kwargs):
     dot_size_highlight = dot_size * 1.1
     annotate_font_size = 5 * font_scale
     scatter_font_size = 8 * font_scale
@@ -68,7 +71,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
     ax.scatter(
         df['log2FoldChange'],
         df['-log10(pvalue)'],
-        alpha=0.9, s=dot_size, c='#1f77b4',  # Changed color to a more subtle blue
+        alpha=0.9, s=dot_size, c=color,
         **kwargs
     )
 
@@ -116,7 +119,7 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', font_s
             ax.scatter(
                 df.loc[label, 'log2FoldChange'],
                 df.loc[label, '-log10(pvalue)'],
-                s=dot_size_highlight, c='#FFA500'
+                s=dot_size_highlight, c=color_highlight
             )
         run_adjust_text(
             df.loc[labels, 'log2FoldChange'], 
