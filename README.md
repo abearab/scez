@@ -1,6 +1,5 @@
-[![Python package](https://github.com/abearab/scez/actions/workflows/main.yml/badge.svg)](https://github.com/abearab/scez/actions/workflows/main.yml)
-
 ## scez – single cell, easy mode
+[![package](https://github.com/abearab/scez/actions/workflows/main.yml/badge.svg)](https://github.com/abearab/scez/actions/workflows/main.yml)
 
 ### Installation
 Make sure you have mamba installed in your base environment. If not, install it with:
