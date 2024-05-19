@@ -14,5 +14,5 @@ conda activate scez
 ```
 Finally, install scez with:
 ```bash
-pip install git+https://github.com/ArcInstitute/scez.git
+pip install git+https://github.com/abearab/scez.git
 ```
