@@ -22,5 +22,7 @@ dependencies:
   - pip:
       - numba
       - tiledbsoma
+      - pydeseq2
+      - scarches
       - adjustText
       - watermark
