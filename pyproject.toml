@@ -18,6 +18,7 @@ dependencies = [
 	"pandas>=0.21,<2.0",
 	"matplotlib<3.7",
  	"seaborn==0.12.2",
+	"scvi-tools",
 	"scanpy",
 	"adjustText",
  	"adpbulk",
@@ -28,4 +29,4 @@ dependencies = [
 ]
 
 [project.urls]
-Source = "https://github.com/ArcInstitute/scez"
+Source = "https://github.com/abearab/scez"

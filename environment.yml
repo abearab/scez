@@ -13,6 +13,7 @@ dependencies:
   - anndata
   - numpy
   - scipy
+  - scvi-tools
   - matplotlib<3.7
   - seaborn=0.12.2
   - ipykernel
