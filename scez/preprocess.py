@@ -1,9 +1,13 @@
 import scanpy as sc
 
 
-def normalization(adata, target_sum=1e4, max_value=10, final_layer='scaled'):
-    # keep raw counts as a layer
-    adata.layers['raw_counts'] = adata.X.copy()
+def normalization(adata, target_sum=1e4, max_value=10, final_layer='scaled', keep_initial_layer=True):
+    if keep_initial_layer == True:
+        adata.layers['raw_counts'] = adata.X.copy()
+    elif type(keep_initial_layer) == str:
+        adata.layers[keep_initial_layer] = adata.X.copy()
+    
+    # normalize counts to target_sum (default 1e4)
     counts = sc.pp.normalize_total(adata, target_sum=target_sum, inplace=False)
     # log1p transform
     adata.layers["log1p_norm"] = sc.pp.log1p(counts["X"], copy=True)
