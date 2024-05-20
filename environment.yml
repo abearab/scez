@@ -24,5 +24,6 @@ dependencies:
       - tiledbsoma
       - pydeseq2
       - scarches
+      - scar
       - adjustText
       - watermark
