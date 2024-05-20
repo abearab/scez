@@ -1,4 +1,6 @@
+import pandas as pd
 import scanpy as sc
+import scar
 
 
 def normalization(adata, target_sum=1e4, max_value=10, final_layer='scaled', keep_initial_layer=True):
@@ -15,6 +17,44 @@ def normalization(adata, target_sum=1e4, max_value=10, final_layer='scaled', kee
     adata.layers['scaled'] = sc.pp.scale(adata, max_value=max_value, copy=True).X
     # set the final layer
     adata.X = adata.layers[final_layer]
+
+
+def remove_ambient_rna(adata_filtered_feature_bc, adata_raw_feature_bc):
+    scar.setup_anndata(
+        adata = adata_filtered_feature_bc,
+        raw_adata = adata_raw_feature_bc,
+        prob = 0.995,
+        kneeplot = True
+    )
+
+    adata_scar = scar.model(
+        raw_count=adata_filtered_feature_bc.to_df(), # In the case of Anndata object, scar will automatically use the estimated ambient_profile present in adata.uns.
+        # ambient_profile=adata_filtered_feature_bc.uns['ambient_profile_Gene Expression'],
+        feature_type='mRNA',
+        sparsity=1,
+        # device=device # Both cpu and cuda are supported.
+    )
+
+    adata_scar.train(
+        epochs=200,
+        batch_size=64,
+        verbose=True
+    )
+
+    # After training, we can infer the native true signal
+    adata_scar.inference(batch_size=256)  # by defaut, batch_size = None, set a batch_size if getting a memory issue
+
+    denoised_count = pd.DataFrame(
+        adata_scar.native_counts, 
+        index=adata_filtered_feature_bc.obs_names, 
+        columns=adata_filtered_feature_bc.var_names
+    )
+
+    adata = adata_filtered_feature_bc.copy()
+    adata.layers['raw_counts'] = adata.X
+    adata.layers['scar_denoised_counts'] = denoised_count.to_numpy()
+
+    return adata
 
 
 def clustering(
