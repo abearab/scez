@@ -19,6 +19,7 @@ dependencies = [
 	"matplotlib<3.7",
  	"seaborn==0.12.2",
 	"scvi-tools",
+	"scar",
 	"scanpy",
 	"adjustText",
  	"adpbulk",
