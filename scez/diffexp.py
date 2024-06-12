@@ -29,7 +29,7 @@ def pseudobulk_by_clusters(adt, condition, cluster_col='leiden', method="mean"):
     return out
 
 
-def run_deseq(adata, design, n_cpus=8):
+def run_deseq(adata, design, tested_level, ref_level, n_cpus=8):
 
     inference = DefaultInference(n_cpus=n_cpus)
     
@@ -37,20 +37,22 @@ def run_deseq(adata, design, n_cpus=8):
         counts=adata.to_df().astype(int),
         metadata=adata.obs,
         design_factors=design,  # compare samples based on the "condition"
-        # column ("B" vs "A")
         refit_cooks=True,
         inference=inference,
     )
 
     dds.deseq2()
 
-    stat_res = DeseqStats(dds, inference=inference)
+    stat_res = DeseqStats(
+        dds, 
+        contrast=[design, tested_level, ref_level], 
+        inference=inference
+    )
     stat_res.summary()
 
     df = stat_res.results_df
 
     return df
-
 
 def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', 
                  font_scale=1, dot_size = 5,
