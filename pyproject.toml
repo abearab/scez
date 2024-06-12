@@ -24,6 +24,7 @@ dependencies = [
 	"adjustText",
  	"adpbulk",
 	"pydeseq2",
+	"pytdc",
 	"blitzgsea",
 	"tqdm",
 	"pytest"

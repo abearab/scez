@@ -5,7 +5,6 @@ channels:
   - bioconda
 dependencies:
   - python=3.9
-  - cellxgene
   - scanpy
   - python-igraph
   - leidenalg
@@ -21,8 +20,8 @@ dependencies:
   - pip
   - pip:
       - numba
-      - tiledbsoma
       - pydeseq2
+      - pytdc
       - scarches
       - scar
       - adjustText
