@@ -9,7 +9,8 @@ on:
 jobs:
   build:
 
-    runs-on: ${{ matrix.os-version }}
+    runs-on: self-hosted
+    # runs-on: ${{ matrix.os-version }}
     name: ${{ matrix.os-version }} (${{ matrix.python-version }})
 
     strategy:
