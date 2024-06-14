@@ -4,25 +4,21 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - python=3.9
+  - python
   - scanpy
   - python-igraph
   - leidenalg
-  - pandas<2.0
   - anndata
-  - numpy
   - scipy
-  - scvi-tools
-  - matplotlib<3.7
-  - seaborn=0.12.2
+  - scar
+  - matplotlib
   - ipykernel
   - mscorefonts
   - pip
   - pip:
       - numba
-      - pydeseq2
       - pytdc
-      - scarches
-      - scar
+      - pydeseq2
+      # - scarches
       - adjustText
       - watermark
