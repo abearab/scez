@@ -18,6 +18,7 @@ dependencies:
   - pip:
       - numba
       - pytdc
+      - adpbulk
       - pydeseq2
       - adjustText
       - watermark
