@@ -9,6 +9,6 @@ RUN apt-get update \
 
 # Install conda env
 COPY environment.yml /tmp/env.yaml
-RUN conda env update -n base -f /tmp/env.yaml \
+RUN mamba env update -n base -f /tmp/env.yaml \
     && conda clean --all --yes \
     && rm -f /tmp/env.yaml
