@@ -2,14 +2,25 @@
 requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
-[project]
+
+[tool.poetry]
 name = "scez"
+version = "0.0.1"
 authors = [
-	{name = "Abe Arab", email = "abarbiology@gmail.com"}
+	"Abe Arab <abarbiology@gmail.com>"
 ]
-license = {file = "LICENSE"}
+license = "MIT"
+readme = "README.md"
 description = "Single Cell Analysis, Easy Mode!"
-dynamic = ["version", "readme"]
+classifiers = [
+	"License :: OSI Approved :: MIT License"
+]
+
+
+[tool.poetry.urls]
+Source = "https://github.com/abearab/scez"
+
+# [tool.poetry.dependencies]
 # dependencies = [
 # 	"anndata>=0.7.4",
 # 	"numpy>=1.17.0",
@@ -27,13 +38,3 @@ dynamic = ["version", "readme"]
 # 	"tqdm",
 # 	"pytest"
 # ]
-classifiers = [
-	"License :: OSI Approved :: MIT License"
-]
-
-[project.urls]
-Source = "https://github.com/abearab/scez"
-
-[tool.setuptools.dynamic]
-version = {attr = "scez.__version__"}
-readme = {file = ["README.md"]}
