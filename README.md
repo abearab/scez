@@ -13,6 +13,12 @@ conda env create -f environment.yml
 conda activate scez
 ```
 Finally, install scez with:
+
+```bash
+pip install scez
+```
+
+Or, if you want to install the latest version from the repository:
 ```bash
 pip install git+https://github.com/abearab/scez.git
 ```

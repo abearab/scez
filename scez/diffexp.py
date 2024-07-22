@@ -54,6 +54,7 @@ def run_deseq(adata, design, tested_level, ref_level, n_cpus=8):
 
     return df
 
+
 def plot_volcano(df, title=None, labels=None, n_genes=False, side='both', 
                  font_scale=1, dot_size = 5,
                  color = '#1f77b4', color_highlight = '#FFA500',
