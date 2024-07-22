@@ -1,6 +1,6 @@
 """scez – Single Cell Analysis, Easy Mode!"""
 
-__version__ = "0.0.6"
+__version__ = "0.1.0"
 
 from . import diffexp as de
 from . import preprocess as pp
