@@ -7,7 +7,7 @@ from . import utils
 import scanpy as sc
 import matplotlib.pyplot as plt
 
-import tolmi
+import tomli
 
 toml_dict = tomli.load(open('pyproject.toml','rb'))
 __version__ = toml_dict['tool']['poetry']['version']
