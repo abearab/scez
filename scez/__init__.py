@@ -8,9 +8,7 @@ import scanpy as sc
 import matplotlib.pyplot as plt
 import importlib.metadata as metadata
 
-
-__version__ = metadata.version(__package__)
-
+__version__ = metadata.version(__name__)
 
 sc.settings.verbosity = 1             # verbosity: errors (0), warnings (1), info (2), hints (3)
 sc.settings.set_figure_params(dpi=100, dpi_save=300, frameon=False, figsize=(5, 5), facecolor='white')
