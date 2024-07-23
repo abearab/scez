@@ -8,8 +8,9 @@ import scanpy as sc
 import matplotlib.pyplot as plt
 
 import tomli
+from pathlib import Path
 
-toml_dict = tomli.load(open('pyproject.toml','rb'))
+toml_dict = tomli.load(open(Path(__file__).parent.parent / 'pyproject.toml','rb'))
 __version__ = toml_dict['tool']['poetry']['version']
 
 
