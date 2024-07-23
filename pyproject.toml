@@ -36,6 +36,10 @@ Source = "https://github.com/abearab/scez"
 # 	"pytest"
 # ]
 
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+tomli = "*"
+
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
 build-backend = "poetry_dynamic_versioning.backend"
