@@ -1,5 +1,6 @@
 .idea/*
 dist/*
+build/*
 actions-runner/*
 *.lock
 **pyc
