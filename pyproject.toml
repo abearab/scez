@@ -11,7 +11,8 @@ classifiers = [
 	"License :: OSI Approved :: MIT License"
 ]
 packages = [
-	{ include = "*" },
+	{ include = "scez" },
+	{ include = "pyproject.toml" },
 ]
 
 [tool.poetry.urls]
