@@ -136,8 +136,8 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both',
         plt.show()
 
 
-def plot_top_DEG_violinplot(adata, df, title=None, labels=None, n_genes=False, side='both', font_scale=1, figsize=(10, 4), **kwargs):
-    layer=None,
+def plot_top_DEG_violinplot(adata, df, layer=None, title=None, labels=None, n_genes=False, side='both', font_scale=1, figsize=(10, 4), **kwargs):
+    
     label_font_size = 9 * font_scale
     title_font_size = 10 * font_scale
 
