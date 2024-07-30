@@ -168,7 +168,7 @@ def plot_top_DEG_violinplot(adata, df, title=None, labels=None, n_genes=False, s
         selected_genes = df.nlargest(n_genes, '-log10(pvalue)')
 
     # Filter the single-cell dataset for the selected genes
-    subset_adata = adata[:, selected_genes.index]
+    subset_adata = adata[:, selected_genes.index].copy()
     subset_adata.var.index = subset_adata.var.index.str.split('_').str[0]
 
     # Convert the subset of adata to a DataFrame
