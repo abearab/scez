@@ -136,7 +136,8 @@ def plot_volcano(df, title=None, labels=None, n_genes=False, side='both',
         plt.show()
 
 
-def plot_top_DEG_violinplot(adata, df, title=None, labels=None, n_genes=False, side='both', font_scale=1, figsize=(10, 4), **kwargs):
+def plot_top_DEG_violinplot(adata, df, layer=None, title=None, labels=None, n_genes=False, side='both', font_scale=1, figsize=(10, 4), **kwargs):
+    
     label_font_size = 9 * font_scale
     title_font_size = 10 * font_scale
 
@@ -167,11 +168,11 @@ def plot_top_DEG_violinplot(adata, df, title=None, labels=None, n_genes=False, s
         selected_genes = df.nlargest(n_genes, '-log10(pvalue)')
 
     # Filter the single-cell dataset for the selected genes
-    subset_adata = adata[:, selected_genes.index]
+    subset_adata = adata[:, selected_genes.index].copy()
     subset_adata.var.index = subset_adata.var.index.str.split('_').str[0]
 
     # Convert the subset of adata to a DataFrame
-    subset_df = subset_adata.to_df()
+    subset_df = subset_adata.to_df(layer=layer)
 
     # Merge the DataFrame with .obs to include the 'sample' information
     merged_df = pd.merge(subset_df, adata.obs[['sample']], left_index=True, right_index=True)
