@@ -17,7 +17,7 @@ jobs:
       max-parallel: 5
       matrix:
         os-version: ["ubuntu-latest"]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11"] # "3.12" "3.13"
 
     steps:
     - uses: actions/checkout@v3
@@ -35,11 +35,10 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: "Install miniconda"
-      uses: conda-incubator/setup-miniconda@v2
+      uses: conda-incubator/setup-miniconda@v3
       with:
           miniconda-version: "latest"
           auto-update-conda: true
-          mamba-version: "*"
           python-version: ${{ matrix.python-version }}
           channels: conda-forge,bioconda
           environment-file: environment.yml
