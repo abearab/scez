@@ -18,7 +18,6 @@ dependencies:
   - pip
   - pip:
       - numba
-      - pytdc
       - adpbulk
       - pydeseq2
       - adjustText
