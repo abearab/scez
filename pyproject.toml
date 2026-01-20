@@ -11,22 +11,22 @@ requires-python = ">=3.9,<4.0"
 classifiers = [
 	"License :: OSI Approved :: MIT License"
 ]
-dependencies = [
-	"numpy",
-	"pandas",
-	"bottleneck",
-	"tqdm",
-	"tomli",
-	"matplotlib",
-	"seaborn",
-	"adjustText",
-	"scanpy",
-	"anndata",
-	"pertpy",
-	"adpbulk",
-	"pydeseq2",
-	"blitzgsea",
-]
+# dependencies = [
+# 	"numpy",
+# 	"pandas",
+# 	"bottleneck",
+# 	"tqdm",
+# 	"tomli",
+# 	"matplotlib",
+# 	"seaborn",
+# 	"adjustText",
+# 	"scanpy",
+# 	"anndata",
+# 	"pertpy",
+# 	"adpbulk",
+# 	"pydeseq2",
+# 	"blitzgsea",
+# ]
 
 [project.urls]
 Source = "https://github.com/abearab/scez"
