@@ -7,3 +7,4 @@ actions-runner/*
 .DS_Store
 uv.lock
 .python-version
+.venv/
