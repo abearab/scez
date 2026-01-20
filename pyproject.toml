@@ -1,6 +1,6 @@
 [project]
 name = "scez"
-version = "0.2.0"
+version = "0.2.1"
 description = "Single Cell Analysis, Easy Mode!"
 authors = [
 	{ name = "Abe Arab", email = "abarbiology@gmail.com" }
