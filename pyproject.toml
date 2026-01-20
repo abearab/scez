@@ -20,7 +20,7 @@ Source = "https://github.com/abearab/scez"
 
 [tool.poetry.dependencies]
 python = "^3.9 <4.0"
-numpy = "^1.26.0"
+numpy = "*"
 pandas = "^2.1.4 <3.0.0"
 bottleneck = "^1.3.6"
 tqdm = "*"
