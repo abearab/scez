@@ -4,7 +4,8 @@ import scanpy as sc
 import scez
 import tomli
 
-toml_dict = tomli.load(open('pyproject.toml','rb'))
+with open('pyproject.toml','rb') as f:
+    toml_dict = tomli.load(f)
 version = toml_dict['project']['version']
 
 class TestScezConfig(unittest.TestCase):
