@@ -4,7 +4,7 @@ import scanpy as sc
 import scez
 import tomli
 
-with open('pyproject.toml','rb') as f:
+with open('pyproject.toml', 'rb') as f:
     toml_dict = tomli.load(f)
 version = toml_dict['project']['version']
 

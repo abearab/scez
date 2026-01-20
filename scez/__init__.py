@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import tomli
 from pathlib import Path
 
-with open(Path(__file__).parent.parent / 'pyproject.toml','rb') as f:
+with open(Path(__file__).parent.parent / 'pyproject.toml', 'rb') as f:
     toml_dict = tomli.load(f)
 __version__ = toml_dict['project']['version']
 
