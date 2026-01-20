@@ -10,8 +10,9 @@ import matplotlib.pyplot as plt
 import tomli
 from pathlib import Path
 
-toml_dict = tomli.load(open(Path(__file__).parent.parent / 'pyproject.toml','rb'))
-__version__ = toml_dict['tool']['poetry']['version']
+with open(Path(__file__).parent.parent / 'pyproject.toml', 'rb') as f:
+    toml_dict = tomli.load(f)
+__version__ = toml_dict['project']['version']
 
 
 sc.settings.verbosity = 1             # verbosity: errors (0), warnings (1), info (2), hints (3)

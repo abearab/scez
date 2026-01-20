@@ -1,45 +1,42 @@
-[tool.poetry]
+[project]
 name = "scez"
 version = "0.2.0"
-authors = [
-	"Abe Arab <abarbiology@gmail.com>"
-]
-license = "MIT"
-readme = "README.md"
 description = "Single Cell Analysis, Easy Mode!"
+authors = [
+	{ name = "Abe Arab", email = "abarbiology@gmail.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.9,<4.0"
 classifiers = [
 	"License :: OSI Approved :: MIT License"
 ]
-packages = [
-	{ include = "scez" },
-	{ include = "pyproject.toml" },
-]
+# dependencies = [
+# 	"numpy",
+# 	"pandas",
+# 	"bottleneck",
+# 	"tqdm",
+# 	"tomli",
+# 	"matplotlib",
+# 	"seaborn",
+# 	"adjustText",
+# 	"scanpy",
+# 	"anndata",
+# 	"pertpy",
+# 	"adpbulk",
+# 	"pydeseq2",
+# 	"blitzgsea",
+# ]
 
-[tool.poetry.urls]
+[project.urls]
 Source = "https://github.com/abearab/scez"
 
-[tool.poetry.dependencies]
-python = "*"
-numpy = "*"
-pandas = "*"
-bottleneck = "*"
-tqdm = "*"
-tomli = "*"
-matplotlib = "*"
-seaborn = "*"
-adjustText = "*"
-scanpy = "*"
-anndata = "*"
-pertpy = "*"
-adpbulk  = "*"
-pydeseq2 = "*"
-blitzgsea = "*"
-
-
-[tool.poetry.group.test.dependencies]
-pytest = "*"
-tomli = "*"
+[project.optional-dependencies]
+test = [
+	"pytest",
+	"tomli",
+]
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

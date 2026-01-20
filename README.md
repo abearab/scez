@@ -12,24 +12,19 @@ This is more a personal effort to streamline my own analysis workflows, but I ho
 
 
 ### Installation
-Make sure you have mamba installed in your base environment. If not, install it with:
-```bash
-conda install mamba -n base -c conda-forge
-```
-Then, create a new conda environment with the provided `environment.yml` file and activate it. This will install all necessary dependencies for scez.
+
+First, create a new conda environment with the provided `environment.yml` file:
 ```bash
 conda env create -f https://raw.githubusercontent.com/abearab/scez/main/environment.yml
-
 conda activate scez
 ```
-Finally, install scez with:
 
+Then, install scez using uv / pip:
 ```bash
-pip install scez
+uv pip install scez
 ```
 
-___
-Or, if you want to install the latest version from the repository:
+Or, to install the latest version from the repository:
 ```bash
-pip install git+https://github.com/abearab/scez.git
+uv pip install git+https://github.com/abearab/scez.git
 ```
