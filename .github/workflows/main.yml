@@ -46,7 +46,8 @@ jobs:
       shell: bash -l {0}
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools wheel build pytest tomli
+        pip install uv
+        uv pip install --system setuptools wheel build pytest tomli
     - name: "Test with pytest"
       shell: bash -l {0}
       run: |

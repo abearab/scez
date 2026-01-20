@@ -5,7 +5,7 @@ import scez
 import tomli
 
 toml_dict = tomli.load(open('pyproject.toml','rb'))
-version = toml_dict['tool']['poetry']['version']
+version = toml_dict['project']['version']
 
 class TestScezConfig(unittest.TestCase):
     def test_version(self):
