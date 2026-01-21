@@ -27,7 +27,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: "Install flake8"
       run: |
-        pip install flake8 tomli
+        pip install flake8
     - name: "Lint with flake8"
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -47,7 +47,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install uv
-        uv pip install --system build pytest tomli
+        uv pip install --system build pytest
+    - name: "Install package in editable mode"
+      shell: bash -l {0}
+      run: |
+        uv pip install --system -e .
     - name: "Test with pytest"
       shell: bash -l {0}
       run: |
