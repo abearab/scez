@@ -7,12 +7,9 @@ from . import utils
 import scanpy as sc
 import matplotlib.pyplot as plt
 
-import tomli
-from pathlib import Path
+from importlib.metadata import version
 
-with open(Path(__file__).parent.parent / 'pyproject.toml', 'rb') as f:
-    toml_dict = tomli.load(f)
-__version__ = toml_dict['project']['version']
+__version__ = version("scez")
 
 
 sc.settings.verbosity = 1             # verbosity: errors (0), warnings (1), info (2), hints (3)

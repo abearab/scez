@@ -34,7 +34,6 @@ Source = "https://github.com/abearab/scez"
 [project.optional-dependencies]
 test = [
 	"pytest",
-	"tomli",
 ]
 
 [build-system]
